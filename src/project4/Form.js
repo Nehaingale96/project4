@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Form.css";
+import { Container, Form, Button } from 'react-bootstrap';
 import { Chart as ChartJs, Tooltip, Title, ArcElement, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
@@ -14,10 +15,9 @@ const ChartMain = () => {
     datasets: [
       {
         data: [0, 0],
-        backgroundColor: ["red", "pink"],
+        backgroundColor: ["red", "green"],
       },
     ],
-    labels: ["Box1", "Box2"],
   });
 
   const handleChange = (e) => {
@@ -32,7 +32,7 @@ const ChartMain = () => {
         setErr("");
       }
     } else {
-      setErr("percentage value always less than 100 and greater than 0");
+      setErr(alert("percentage value always less than 100"));
     }
   };
 
@@ -45,50 +45,46 @@ const ChartMain = () => {
         datasets: [
           {
             data: [percent.true, percent.false],
-            backgroundColor: ["red", "pink"],
+            backgroundColor: ["red", "green"],
           },
         ],
-        labels: ["true", "false"],
       });
     }
   };
 
   
   return (
-
-
-    <div className="container">
-      {err && <p style={{ color: "red" }}>{err}</p>}
-      <div className="form">
-        <div>
-          <label htmlFor="true">Box 1</label>
-          <input
-            type="number"
-            id="true"
-            name="true"
+  <Container>
+      {err && <p class="alert alert-danger col-sm-12" style={{ color: 'red', textAlign: 'center' }}>{err}</p>}
+      <div className='form'>
+        <Form.Group controlId='true'>
+          <Form.Label>Box 1</Form.Label>
+          <Form.Control
+            type='number'
+            name='true'
             value={percent.true}
             onChange={handleChange}
+            className='form-control'
           />
-        </div>
-        <div className="field">
-          <label htmlFor="false">Box 2</label>
-          <input
-            type="number"
-            id="false"
-            name="false"
+        </Form.Group>
+
+        <Form.Group controlId='false'>
+          <Form.Label>Box 2</Form.Label>
+          <Form.Control
+            type='number'
+            name='false'
             value={percent.false}
             onChange={handleChange}
+            className='form-control '
           />
-        </div>
-        <button onClick={handleSubmit}>Create Chart</button>
+        </Form.Group>
+      <button type="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" onClick={handleSubmit}>Create Chart</button>
       </div>
-      <div
-        className="App"
-        style={{ width: "40%", height: "40%", margin: "0 auto" }}
-      >
+      <div style={{ width: '40%', height: '40%', margin: '0 auto' }}>
         <Pie data={data} />
       </div>
-    </div>
+    </Container>
+  
   );
 };
 
